@@ -93,7 +93,7 @@ for fname in list:
 
     try :
         psize = os.path.getsize(ppath)
-        if psize > 500000 :
+        if psize > 2000000 :
             hppath = npath + art0 + ' - ' + art1 + '_Huge' +'.png'
             copyfile(ppath, hppath)
             img = Image.open(ppath)
