@@ -1,4 +1,3 @@
-from itertools import count
 import os
 import json
 import re
@@ -9,6 +8,7 @@ from PIL import Image
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, TIT2, TPE1, TALB, USLT ,TRCK
 from mutagen.flac import FLAC, Picture
+from itertools import count
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 headers = {'User-agent': 'Mozilla/5.0'}
@@ -77,11 +77,11 @@ for fname in list:
     art0 = str(info['artist']).replace("['",'').replace("']",'')
     art1 = str(info['album']).replace("['",'').replace("']",'')
     art2 = str(info['title']).replace("['",'').replace("']",'')
-    art20 = art2
+    art10 = art1
     for i in '\/:*?"<>|':
-            art20 = art20.replace(i, '_')
+            art10 = art10.replace(i, '_')
     
-    npath =  OUTPUTPATH + '\\' + art0 + ' - ' + art1 + '\\'
+    npath =  OUTPUTPATH + '\\' + art0 + ' - ' + art10 + '\\'
     mkdir(npath)
 
     ppath = npath + art0 + ' - ' + art1 + '.png'
