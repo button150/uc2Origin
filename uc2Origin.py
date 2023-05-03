@@ -71,17 +71,18 @@ for fname in list:
     
     with open(INPUTPATH + re.sub(r'(\.uc)', '.info', fname)) as fi:
         mtype = json.loads(fi.read())['format']
- 
+    
     info = getInfoFromWeb(id)
     lyr = getLyric(id)
-    art0 = str(info['artist']).replace("['",'').replace("']",'')
-    art1 = str(info['album']).replace("['",'').replace("']",'')
-    art2 = str(info['title']).replace("['",'').replace("']",'')
-    art10 = art1
+    art0 = str(info['artist'])[2:-2]
+    art1 = str(info['album'])[2:-2]
+    art2 = str(info['title'])[2:-2]
     for i in '\/:*?"<>|':
-            art10 = art10.replace(i, '_')
-    
-    npath =  OUTPUTPATH + '\\' + art0 + ' - ' + art10 + '\\'
+            art2 = art2.replace(i, '_')
+            art1 = art1.replace(i, '_')
+            art0 = art0.replace(i, '_')
+ 
+    npath =  OUTPUTPATH + '\\'+ art0 + ' - ' + art1 + '\\'
     mkdir(npath)
 
     ppath = npath + art0 + ' - ' + art1 + '.png'
