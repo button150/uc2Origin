@@ -106,7 +106,7 @@ for fname in list:
             print('Cover Size too huge ~ resize')
     except :
         print('An error occurred while resize Cover img .')
-    
+
     if id :
         try :
             with open(npath + art0 + ' - ' + art2 + '_' + id + '.' + mtype, 'wb') as fo:
@@ -116,26 +116,9 @@ for fname in list:
         except:
             print('An error occurred while generating the file .')
 
-    if mtype == 'mp3' :
-        audio = ID3(npath + art0 + ' - ' + art2 + '_' + id + '.mp3')
-        audio.delall()
-        audio.add(TPE1(encoding=3, text=info['artist']))
-        audio.add(TIT2(encoding=3, text=info['title']))
-        audio.add(TALB(encoding=3, text=info['album']))
-        audio.add(TRCK(encoding=3, text=info['trno']))
-        audio.add(USLT(encoding=3, lang="eng", desc="", text=lyr))
-        audio.add(APIC(encoding=3,
-                        mime='image/png',
-                        type=3, 
-                        desc='Cover',
-                        data=open(ppath ,'rb').read()
-                        ) )
-        audio.update_to_v24()
-        audio.save()
-        counto +=1
-    elif mtype == 'flac' :
+    if mtype == 'flac' :
         audio = FLAC(npath + art0 + ' - ' + art2 + '_' + id + '.flac')
-        audio.delete()
+        print(str(info['artist']) +" - " +str(info['title']) + " - " + str(info['album']))
         audio['artist'] = info['artist']
         audio['title'] = info['title']
         audio['album'] = info['album']
@@ -150,8 +133,26 @@ for fname in list:
         audio.add_picture(picture)
         audio.save()
         counto +=1
+    elif mtype == 'mp3' :
+        audio = ID3(npath + art0 + ' - ' + art2 + '_' + id + '.mp3', v2_version=3)
+        print(str(info['artist']) +" - " +str(info['title']) + " - " + str(info['album']))
+        audio.add(TPE1(encoding=3, text=info['artist']))
+        audio.add(TIT2(encoding=3, text=info['title']))
+        audio.add(TALB(encoding=3, text=info['album']))
+        audio.add(TRCK(encoding=3, text=info['trno']))
+        audio.add(USLT(encoding=3, lang="eng", desc="", text=lyr))
+        audio.add(APIC(encoding=3,
+                        mime = 'image/png',
+                        type = 3, 
+                        desc = 'Cover',
+                        data = open(ppath , 'rb').read()
+                        ) )
+        audio.save(v2_version=3)
+        counto +=1
     else :
          print('null')
 print('sucess: ' + str(counto))
+
+   
 
     
