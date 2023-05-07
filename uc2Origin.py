@@ -94,11 +94,11 @@ for fname in list:
 
     try :
         psize = os.path.getsize(ppath)
-        if psize > 262144 :
+        if psize > 5242880 :
             hppath = npath + art0 + ' - ' + art1 + '_Huge' +'.png'
             copyfile(ppath, hppath)
             img = Image.open(ppath)
-            x = int(psize / 262144)
+            x = psize / 5242880
             width = int((img.size[0]) / x)
             height = int((img.size[1]) / x)
             imgout = img.resize((width, height), Image.LANCZOS) 
@@ -118,7 +118,7 @@ for fname in list:
 
     if mtype == 'mp3' :
         audio = ID3(npath + art0 + ' - ' + art2 + '_' + id + '.mp3')
-        audio.delete()
+        audio.delall()
         audio.add(TPE1(encoding=3, text=info['artist']))
         audio.add(TIT2(encoding=3, text=info['title']))
         audio.add(TALB(encoding=3, text=info['album']))
@@ -127,14 +127,16 @@ for fname in list:
         audio.add(APIC(encoding=3,
                         mime='image/png',
                         type=3, 
-                        desc=u'Cover',
+                        desc='Cover',
                         data=open(ppath ,'rb').read()
                         ) )
+        audio.update_to_v24()
         audio.save()
         counto +=1
     elif mtype == 'flac' :
         audio = FLAC(npath + art0 + ' - ' + art2 + '_' + id + '.flac')
         audio.delete()
+        audio.add_tags
         audio['artist'] = info['artist']
         audio['title'] = info['title']
         audio['album'] = info['album']
@@ -152,7 +154,5 @@ for fname in list:
     else :
          print('null')
 print('sucess: ' + str(counto))
-
-   
 
     
