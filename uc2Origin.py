@@ -136,7 +136,6 @@ for fname in list:
     elif mtype == 'flac' :
         audio = FLAC(npath + art0 + ' - ' + art2 + '_' + id + '.flac')
         audio.delete()
-        audio.add_tags
         audio['artist'] = info['artist']
         audio['title'] = info['title']
         audio['album'] = info['album']
