@@ -94,19 +94,19 @@ for fname in list:
 
     try :
         psize = os.path.getsize(ppath)
-        if psize > 2000000 :
+        if psize > 262144 :
             hppath = npath + art0 + ' - ' + art1 + '_Huge' +'.png'
             copyfile(ppath, hppath)
             img = Image.open(ppath)
-            x = int(psize / 5000000)
+            x = int(psize / 262144)
             width = int((img.size[0]) / x)
             height = int((img.size[1]) / x)
-            imgout = img.resize((width, height))
+            imgout = img.resize((width, height), Image.LANCZOS) 
             imgout.save(ppath, 'png')
             print('Cover Size too huge ~ resize')
     except :
         print('An error occurred while resize Cover img .')
-
+    
     if id :
         try :
             with open(npath + art0 + ' - ' + art2 + '_' + id + '.' + mtype, 'wb') as fo:
@@ -118,6 +118,7 @@ for fname in list:
 
     if mtype == 'mp3' :
         audio = ID3(npath + art0 + ' - ' + art2 + '_' + id + '.mp3')
+        audio.delete()
         audio.add(TPE1(encoding=3, text=info['artist']))
         audio.add(TIT2(encoding=3, text=info['title']))
         audio.add(TALB(encoding=3, text=info['album']))
@@ -133,6 +134,7 @@ for fname in list:
         counto +=1
     elif mtype == 'flac' :
         audio = FLAC(npath + art0 + ' - ' + art2 + '_' + id + '.flac')
+        audio.delete()
         audio['artist'] = info['artist']
         audio['title'] = info['title']
         audio['album'] = info['album']
