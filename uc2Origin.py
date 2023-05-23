@@ -77,7 +77,7 @@ for fname in list:
     art0 = str(info['artist'])[2:-2]
     art1 = str(info['album'])[2:-2]
     art2 = str(info['title'])[2:-2]
-    for i in '\/:*?"<>|':
+    for i in '\/:*?"<>|.':
             art2 = art2.replace(i, '_')
             art1 = art1.replace(i, '_')
             art0 = art0.replace(i, '_')
